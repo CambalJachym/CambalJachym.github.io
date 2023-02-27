@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<!-- This Site will be beaten Soon!-->
+<!-- tihs starts head-->
+<html lang="en">
+<head>
+<!-- title is the way people browse through Google querry-->
+<title>Cambal Design Portfolio</title>
+<!-- utf8 is standard encoding-->
+<meta charset="utf-8">
+<!-- meata name viewport is the optimal way to show sites on both phones and desktops-->
+<meta name = "viewport" content="width=device-width, initial-scale=1">
+<style>
+body, html {
+  height: 100%;
+  margin: 0;
+}
+:root {
+  --headerColor: rgb(0, 0, 0);
+  --backGroundColor: rgb(119, 119, 119);
+
+
+}
+* {
+    box-sizing: border-box;
+}
+h1 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+p {
+  text-align:center;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.column{
+  float: left;
+  width: 50%;
+  padding: 5px;
+}
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container {
+  position: relative;
+
+}
+.container img {vertical-align: left;}
+.container .content {
+  position: absolute;
+  bottom: 0;
+  background: rgb(0, 0, 0); /* Fallback color */
+  background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
+  color: #f1f1f1;
+  width: 100%;
+
+}
+@media screen and (max-width: 700px) {
+  .column {
+    width: 100%;
+  }
+}
+body {
+  font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace; 
+  background: var(--backGroundColor);
+}
+
+/* Style the header */
+header {
+  
+  background-color: var(--headerColor);
+  padding: 0.02px;
+  text-align: center;
+  font-size: 35px;
+  color: rgb(0, 0, 0);
+}
+
+nav {
+  float: left;
+  width: 67%;
+  background: var(--headerColor);
+}
+
+/* Style the list inside the menu */
+nav ul {
+  font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace; 
+  text-align: center;
+  list-style-type: none;
+  padding: 0;
+}
+article {
+  color:rgb(255, 255, 255);
+  font-size: 20px;
+  float: left;
+  width: 33%;
+  background-color: var(--backGroundColor);
+
+  align-content: center;
+  text-align: center;
+}
+footer {
+  background-color: var(--headerColor);
+  padding: 3px;
+  text-align: center;
+  font-size: 15px;
+  color: rgb(255, 255, 255);
+}
+.footer{
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  bottom:0;
+}
+section::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#blender {
+    background-color: rgb(255, 145, 0);
+  color: rgba(255, 166, 0, 0.274);
+  border: 10px solid var(--headerColor);
+}
+#sketchup {
+  
+    background-color: rgb(255, 0, 0);
+  color: rgba(255, 166, 0, 0.301);
+  border: 10px solid var(--headerColor);
+  
+}
+#unity{
+    background-color: rgba(255, 255, 255, 1);
+  color: rgba(255, 166, 0, 0.445);
+  border: 10px solid var(--headerColor);
+  
+  
+}
+ul a:hover{
+  background-color: var(--headerColor);
+  color: rgb(255, 255, 255);
+}
+ul a{
+  color: #000;
+  font-size: 40px;
+  display: block;
+  text-decoration: none;
+  padding: 50px 15px;
+}
+</style>
+</head>
+<body>
+<header>
+    <h2 style="font-weight: normal;color:#f1f1f1">CambaljDesign.</h2>
+</header>
+
+<section>
+    <nav>
+      <ul>
+        <li id="blender"><a href="#">Blender</a></li>
+        <li id="sketchup"><a href="#">SketchUp</a></li>
+        <li id="unity"><a href="#">Unity</a></li>
+      </ul>
+    </nav>
+
+    <article>
+        <h3 style="font-weight: normal;margin-top: 5px;
+        margin-bottom: 2px;">Nejnovější výtvory:</h3>
+        <div class="row">
+          <div class="column">
+            <div class="container">
+              <img src="bed.png" alt="3d render postel" class="center" style="width:100%">
+              <div class="content">
+                <h1 style="font-size: 15px">Postel S Potahem</h1>
+                <p style="font-size: 13px;" >(Blender)</p>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="container">
+              <img src="bigCupBoardDresser.png" alt="3d render šuplíků na oblečení" class="center" style="width:100%">
+              <div class="content">
+                <h1 style="font-size: 15px">Prádelník</h1>
+                <p style="font-size: 13px;" >(Blender)</p>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="column">
+            <div class="container">
+              <img src="kancelarskaZidleVPlastu.png" alt="Kancelářská židle v plastu" class="center" style="width:100%">
+              <div class="content">
+                <h1 style="font-size: 15px">kancelařská židle v plastu</h1>
+                <p style="font-size: 13px;" >(Blender)</p>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="container">
+              <img src="kancelarskaZidle.png" alt="Kancelářská židle" class="center" style="width:100%">
+              <div class="content">
+                <h1 style="font-size: 15px">Kancelářská Židle</h1>
+                <p style="font-size: 13px;" >(Blender)</p>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="column">
+            <div class="container">
+              <img src="Lampa.png" alt="Lampa" class="center" style="width:100%">
+              <div class="content">
+                <h1 style="font-size: 15px">Lampa</h1>
+                <p style="font-size: 13px;" >(Blender)</p>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="container">
+              <img src="CteciStolek.png" alt="3d render čtecího stolku" class="center" style="width:100%">
+              <div class="content">
+                <h1 style="font-size: 15px">Čtecí stolek</h1>
+                <p style="font-size: 13px;" >(Blender)</p>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="column">
+            <div class="container">
+              <img src="DreveneKreslo.png" alt="Dřevěné křeslo" class="center" style="width:100%">
+              <div class="content">
+                <h1 style="font-size: 15px">Dřevěné křeslo</h1>
+                <p style="font-size: 13px;" >(Blender)</p>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="container">
+              <img src="SkrinMeziPokoji.png" alt="Policová skříň" class="center" style="width:100%">
+              <div class="content">
+                <h1 style="font-size: 15px">Policová skříň</h1>
+                <p style="font-size: 13px;" >(Blender)</p>
+              </div>
+            </div>
+        </div>
+    </article>
+</section>
+</body>
+<footer class="footer">
+  <p>Jáchym Čambal. 2023</p>
+</footer>
+</html>
