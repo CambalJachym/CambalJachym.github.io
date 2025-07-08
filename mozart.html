@@ -3,77 +3,92 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Canvas Controls Inside</title>
+  <title>Mozartovy nejen koule</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f0f0f0;
-      text-align: center;
-    }
-    h1, p {
-      margin: 10px;
-    }
-    .canvas-container {
-      position: relative;
-      width: 600px;
-      height: 600px;
-      margin: 20px auto;
-    }
-    canvas {
-      border: 2px solid black;
-      display: block;
-      background: #fff;
-    }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    text-align: center;
+  }
+  h1, p {
+    margin: 10px;
+  }
 
-    .btn {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      font-size: 18px;
-      border-radius: 8px;
-      border: 1px solid #444;
-      background: #fff;
-      cursor: pointer;
-    }
+  .canvas-container {
+    position: relative;
+    width: 90vw;
+    max-width: 600px;
+    margin: 0 auto;
+    aspect-ratio: 1 / 1;
+  }
 
-    /* Cardinal Directions */
-    .up    { top: 10px; left: 50%; transform: translateX(-50%); }
-    .down  { bottom: 10px; left: 50%; transform: translateX(-50%); }
-    .left  { left: 10px; top: 50%; transform: translateY(-50%); }
-    .right { right: 10px; top: 50%; transform: translateY(-50%); }
+  canvas {
+    width: 100%;
+    height: 100%;
+    border: 2px solid black;
+    display: block;
+    background: #fff;
+  }
 
-    /* Diagonals */
-    .up-left    { top: 10px; left: 10px; }
-    .up-right   { top: 10px; right: 10px; }
-    .down-left  { bottom: 10px; left: 10px; }
-    .down-right { bottom: 10px; right: 10px; }
+  .btn {
+    position: absolute;
+    width: 12vw;
+    height: 12vw;
+    max-width: 60px;
+    max-height: 60px;
+    font-size: 2em; /* fixed size to keep arrows within button */
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #fff;
+    cursor: pointer;
+    user-select: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .reset-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #444;
-      background: #fff;
-      cursor: pointer;
-    }
+  /* Cardinal Directions */
+  .up    { top: 5px; left: 50%; transform: translateX(-50%); }
+  .down  { bottom: 5px; left: 50%; transform: translateX(-50%); }
+  .left  { left: 5px; top: 50%; transform: translateY(-50%); }
+  .right { right: 5px; top: 50%; transform: translateY(-50%); }
+
+  /* Diagonals */
+  .up-left    { top: 5px; left: 5px; }
+  .up-right   { top: 5px; right: 5px; }
+  .down-left  { bottom: 5px; left: 5px; }
+  .down-right { bottom: 5px; right: 5px; }
+
+  .reset-btn {
+    margin: 20px auto;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #fff;
+    cursor: pointer;
+  }
   </style>
+
 </head>
 <body>
-  <h1>Draw Shapes with On-Canvas Buttons</h1>
-  <p>Use arrow keys or tap the buttons inside the canvas</p>
+  <h1>Draw Shapes</h1>
+  <p>Použij šipky ke kreslení a navigaci</p>
 
   <div class="canvas-container">
-    <canvas id="canvas" width="600" height="600"></canvas>
+    <canvas id="canvas"></canvas>
 
-    <!-- Direction Buttons -->
+    <!-- Buttons inside canvas -->
     <button class="btn up" onclick="move('ArrowUp')">↑</button>
     <button class="btn down" onclick="move('ArrowDown')">↓</button>
     <button class="btn left" onclick="move('ArrowLeft')">←</button>
     <button class="btn right" onclick="move('ArrowRight')">→</button>
 
-    <!-- Diagonal Buttons -->
     <button class="btn up-left" onclick="move('KeyQ')">↖</button>
     <button class="btn up-right" onclick="move('KeyW')">↗</button>
     <button class="btn down-left" onclick="move('KeyZ')">↙</button>
@@ -86,7 +101,11 @@
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
 
-    const step = 20;
+    let size = canvas.parentElement.offsetWidth;
+    canvas.width = size;
+    canvas.height = size;
+
+    const step = size / 20;
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
 
@@ -166,13 +185,22 @@
 
     function resetCanvas() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      x = centerX;
-      y = centerY;
+      x = canvas.width / 2;
+      y = canvas.height / 2;
       path = [[x, y]];
     }
 
+    // Support keyboard
     window.addEventListener("keydown", (e) => {
       move(e.code);
+    });
+
+    // Recalculate canvas size if window resizes
+    window.addEventListener("resize", () => {
+      const newSize = canvas.parentElement.offsetWidth;
+      canvas.width = newSize;
+      canvas.height = newSize;
+      resetCanvas();
     });
   </script>
 </body>
