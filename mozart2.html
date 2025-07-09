@@ -157,12 +157,12 @@
     }
 
     function isClosedPath() {
-      console.info(path);
-      console.info(step);
+      console.info(path.length);
       if (path.length < 4) return false;
       const [startX, startY] = path[0];
-      console.info(path);
-      return Math.abs(x - startX) < step && Math.abs(y - startY) < step;
+      console.info(Math.abs(x - startX), step, Math.abs(y - startY), step);
+      return (Math.abs(x - startX) < step && Math.abs(y - startY) < step) && (x == startX && y == startY);
+      
     }
 
     function fillShape() {
