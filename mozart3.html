@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Shape Drawer</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      text-align: center;
+    }
+
+    h1, p {
+      margin: 10px;
+    }
+
+    .canvas-container {
+      position: relative;
+      width: 90vw;
+      max-width: 600px;
+      height: min(90vw, 70vh); /* Responsive height based on viewport */
+      margin: 0 auto;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      border: 2px solid black;
+      display: block;
+      background: #fff;
+    }
+
+    .btn {
+      position: absolute;
+      width: 12vw;
+      height: 12vw;
+      max-width: 60px;
+      max-height: 60px;
+      font-size: 2em;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background: #fff;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    /* Cardinal Directions */
+    .up    { top: 5px; left: 50%; transform: translateX(-50%); }
+    .down  { bottom: 5px; left: 50%; transform: translateX(-50%); }
+    .left  { left: 5px; top: 50%; transform: translateY(-50%); }
+    .right { right: 5px; top: 50%; transform: translateY(-50%); }
+
+    /* Diagonals */
+    .up-left    { top: 5px; left: 5px; }
+    .up-right   { top: 5px; right: 5px; }
+    .down-left  { bottom: 5px; left: 5px; }
+    .down-right { bottom: 5px; right: 5px; }
+
+    .reset-btn {
+      margin: 20px auto;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Draw Shapes</h1>
+  <p>Tap arrows or use keyboard to draw</p>
+
+  <div class="canvas-container">
+    <canvas id="canvas"></canvas>
+
+    <!-- Direction Buttons -->
+    <button class="btn up" onclick="move('ArrowUp')">↑</button>
+    <button class="btn down" onclick="move('ArrowDown')">↓</button>
+    <button class="btn left" onclick="move('ArrowLeft')">←</button>
+    <button class="btn right" onclick="move('ArrowRight')">→</button>
+    <button class="btn up-left" onclick="move('KeyQ')">↖</button>
+    <button class="btn up-right" onclick="move('KeyW')">↗</button>
+    <button class="btn down-left" onclick="move('KeyZ')">↙</button>
+    <button class="btn down-right" onclick="move('KeyC')">↘</button>
+  </div>
+
+  <button class="reset-btn" onclick="resetCanvas()">Reset</button>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    const colors = [
+      "rgba(137, 207, 240, 0.5)", // baby blue
+      "rgba(128, 0, 128, 0.5)",   // purple
+      "rgba(255, 255, 0, 0.5)",   // yellow
+      "rgba(0, 128, 0, 0.5)"      // green
+    ];
+    let colorIndex = 0;
+
+    let x, y, path = [];
+
+    function getStep() {
+      return canvas.width / 20;
+    }
+
+    function resetCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      x = canvas.width / 2;
+      y = canvas.height / 2;
+      path = [[x, y]];
+    }
+
+    function resizeCanvas() {
+      const container = canvas.parentElement;
+      const width = container.offsetWidth;
+      const height = container.offsetHeight;
+
+      canvas.width = width;
+      canvas.height = height;
+
+      resetCanvas();
+    }
+
+    function drawLine(newX, newY) {
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(newX, newY);
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      x = newX;
+      y = newY;
+      path.push([x, y]);
+    }
+
+    function isClosedPath() {
+      if (path.length < 4) return false;
+      const [startX, startY] = path[0];
+      return Math.abs(x - startX) < step && Math.abs(y - startY) < step;
+    }
+
+    function fillShape() {
+      ctx.beginPath();
+      ctx.moveTo(path[0][0], path[0][1]);
+      for (let i = 1; i < path.length; i++) {
+        ctx.lineTo(path[i][0], path[i][1]);
+      }
+      ctx.closePath();
+      ctx.fillStyle = colors[colorIndex];
+      ctx.fill();
+      colorIndex = (colorIndex + 1) % colors.length;
+    }
+
+    function move(key) {
+      let newX = x;
+      let newY = y;
+
+      switch (key) {
+        case "ArrowUp":    newY -= step; break;
+        case "ArrowDown":  newY += step; break;
+        case "ArrowLeft":  newX -= step; break;
+        case "ArrowRight": newX += step; break;
+        case "KeyQ":       newX -= step; newY -= step; break; // ↖
+        case "KeyW":       newX += step; newY -= step; break; // ↗
+        case "KeyZ":       newX -= step; newY += step; break; // ↙
+        case "KeyC":       newX += step; newY += step; break; // ↘
+        default: return;
+      }
+
+      if (newX < 0 || newX > canvas.width || newY < 0 || newY > canvas.height) return;
+
+      drawLine(newX, newY);
+
+      if (isClosedPath()) {
+        fillShape();
+        x = centerX;
+        y = centerY;
+        path = [[x, y]];
+      }
+    }
+
+    // Resize and re-init on load and rotate
+    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("orientationchange", resizeCanvas);
+    window.addEventListener("keydown", (e) => move(e.code));
+
+    resizeCanvas(); // initial load
+  </script>
+</body>
+</html>
